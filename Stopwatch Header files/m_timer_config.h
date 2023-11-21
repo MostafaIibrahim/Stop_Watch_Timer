@@ -12,7 +12,7 @@
  *                        - TIMER0_CTC
  *                        - TIMER0_OVF
  */
-#define TIMER0_MODE   TIMER0_CTC
+
 
 
 #endif /* M_TIMER_CONFIG_H_ */

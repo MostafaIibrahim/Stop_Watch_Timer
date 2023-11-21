@@ -4,6 +4,7 @@
  *  Created on: Aug 12, 2023
  *      Author: SOFT ZONE
  */
+
 #include "STD_Types.h"
 #include "common_macros.h"
 
@@ -32,17 +33,15 @@ int main(){
 	Port_voidInit();
 	/* Initialize three push buttons  */
 	PB_Init();
+	TMR_Init();
 	/* Enable global interrupt */
 	MGIE_voidEnable();
-
-	TMR_Init();
-
 	while(1){
 		SEVEN_SEG_voidDisplay(g_sec,g_min,g_hr);
 	}
 }
 void PB_Init(void){
-	EXTERNAL_INTERRUPT_Config config_interrupt = {FALLING_EDGE,INT2_FALLING_EDGE};
+	EXTERNAL_INTERRUPT_Config config_interrupt = {INT_FALLING_EDGE,INT2_FALLING_EDGE};
 	void (*L_ptr_INT[3])(void) = {PB_Pause,PB_Reset,PB_Resume};
 	/* Enable Interrupt */
 	EXTERNAL_INTERRUPT_init(&config_interrupt);
@@ -73,7 +72,7 @@ void TMR_Update(void){
 			g_min = 0 ;
 			g_hr++;
 		}
-		if(g_hr == 60){
+		if(g_hr == 24 ){
 			g_hr = 0 ;
 		}
 	}
@@ -89,3 +88,4 @@ void PB_Reset(void){
 void PB_Resume(void){
 	M_TIMER0_voidSelectPrescaler(PRESC_8);
 }
+
